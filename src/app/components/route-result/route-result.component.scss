@@ -87,8 +87,10 @@
 }
 
 .map-actions {
-  margin-top: 2rem;
-  text-align: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
 }
 
 .yandex-maps-btn {
@@ -114,6 +116,31 @@
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(252, 63, 29, 0.3);
+  }
+}
+
+.new-route-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background: var(--primary, #4CAF50);  // Зеленый цвет для отличия
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
   }
 }
 

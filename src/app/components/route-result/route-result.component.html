@@ -1,4 +1,4 @@
-<div class="result-container">
+<div class="result-container" *ngIf="routeData">
   <div class="route-details">
     <div *ngFor="let stage of routeData.stages; let i = index" class="stage-card">
       <h3>Этап {{i + 1}}: {{stage.title}}</h3>
@@ -50,6 +50,9 @@
     <button class="yandex-maps-btn" (click)="openInYandexMaps()">
       <img src="assets/icons/yandex-maps.svg" alt="Yandex Maps Icon">
       Открыть весь маршрут в Яндекс.Картах
+    </button>
+    <button class="new-route-btn" (click)="createNewRoute()">
+      Создать новый маршрут
     </button>
   </div>
 </div>

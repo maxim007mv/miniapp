@@ -1,22 +1,21 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
-import { RouteFormComponent } from './components/route-form/route-form.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
-    title: 'Главная - Планировщик маршрутов'
+    loadComponent: () => import('./components/home/home.component').then(m => m.HomeComponent)
   },
   {
     path: 'route',
-    component: RouteFormComponent,
-    title: 'Создание маршрута'
+    loadComponent: () => import('./components/route-form/route-form.component').then(m => m.RouteFormComponent)
   },
   {
-    path: '**',
-    redirectTo: '',
-    pathMatch: 'full'
+    path: 'login',
+    loadComponent: () => import('./components/login/login.component').then(m => m.LoginComponent)
+  },
+  {
+    path: 'profile',
+    loadComponent: () => import('./components/profile/profile.component').then(m => m.ProfileComponent)
   }
 ];
 

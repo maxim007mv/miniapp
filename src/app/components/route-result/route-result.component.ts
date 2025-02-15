@@ -1,6 +1,8 @@
 import { Component, Input, AfterViewInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouteData } from '../../models/route-data';
+import { Router } from '@angular/router';
+import { RouteService } from '../../services/route.service';
 
 @Component({
   selector: 'app-route-result',
@@ -16,6 +18,14 @@ export class RouteResultComponent implements AfterViewInit, OnDestroy {
   private map: ymaps.Map | null = null;
   private mapInitialized = false;
 
+  constructor(
+    private router: Router,
+    private routeService: RouteService
+  ) {
+    // Сохраняем текущий маршрут
+    this.routeService.setCurrentRoute(this.routeData);
+  }
+
   ngAfterViewInit(): void {
     this.initMap();
   }
@@ -23,7 +33,9 @@ export class RouteResultComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.map) {
       this.map.destroy();
+      this.map = null;
     }
+    this.mapInitialized = false;
   }
 
   private async initMap(): Promise<void> {
@@ -47,9 +59,9 @@ export class RouteResultComponent implements AfterViewInit, OnDestroy {
 
   private waitForYMaps(): Promise<void> {
     return new Promise((resolve) => {
-      // Если ymaps уже загружен
-      if (typeof ymaps !== 'undefined' && ymaps.ready) {
-        ymaps.ready(resolve);
+      // Если ymaps уже загружен и готов
+      if (typeof ymaps !== 'undefined' && ymaps.ready()) {
+        resolve();
         return;
       }
 
@@ -60,7 +72,7 @@ export class RouteResultComponent implements AfterViewInit, OnDestroy {
         return;
       }
 
-      // Если скрипт еще не добавлен
+      // Только если скрипт еще не добавлен
       const script = document.createElement('script');
       script.src = 'https://api-maps.yandex.ru/2.1/?lang=ru_RU';
       script.async = true;
@@ -119,5 +131,11 @@ export class RouteResultComponent implements AfterViewInit, OnDestroy {
         window.open(this.routeData.mapUrl, '_blank');
       }
     }
+  }
+
+  createNewRoute() {
+    // Здесь логика для создания нового маршрута
+    // Например, очистка формы и переход к началу
+    this.router.navigate(['/create-route']);
   }
 }
